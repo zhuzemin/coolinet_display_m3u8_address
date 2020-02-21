@@ -1,8 +1,11 @@
 // ==UserScript==
-// @name        coolinet display m3u8 address
-// @namespace   coolinet_display_m3u8_address
+// @name        coolinet m3u8 address
+// @name:zh-TW        coolinet m3u8 address
+// @name:zh-CN        coolinet m3u8 address
 // @supportURL  https://github.com/zhuzemin
-// @description coolinet 显示m3u8地址
+// @description coolinet show m3u8 address
+// @description:zh-CN coolinet show m3u8 address
+// @description:zh-TW coolinet show m3u8 address
 // @include     https://www.coolinet.net/*
 // @version     1.0
 // @grant       GM_xmlhttpRequest
