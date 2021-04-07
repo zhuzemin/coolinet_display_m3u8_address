@@ -8,8 +8,8 @@
 // @description:zh-TW coolinet show m3u8 address
 // @include     https://www.coolinet.net/*
 // @include     https://video1.yocoolnet.in/api/player_coolinet.php?*
-// @version     1.01
-// @run-at      document-end
+// @version     1.02
+// @run-at      document-start
 // @author      zhuzemin
 // @license     Mozilla Public License 2.0; http://www.mozilla.org/MPL/2.0/
 // @license     CC Attribution-ShareAlike 4.0 International; http://creativecommons.org/licenses/by-sa/4.0/
@@ -70,7 +70,8 @@ let init = function () {
       url = script.innerText.match(/url:\s"([:\/\.\d\w]*)"/)[1];
     }
     debug(url);
-    parent.postMessage(url, "*");
+    setInterval(()=>{parent.postMessage(url, "*");},4000);
+    
   }
 }
 window.addEventListener('DOMContentLoaded', init);
