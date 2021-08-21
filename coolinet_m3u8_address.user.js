@@ -8,8 +8,8 @@
 // @description:zh-TW coolinet show m3u8 address
 // @include     https://www.coolinet.net/*
 // @include     https://video1.yocoolnet.in/api/player_coolinet.php?*
-// @version     1.02
-// @run-at      document-start
+// @version     1.03
+// @run-at      document-end
 // @author      zhuzemin
 // @license     Mozilla Public License 2.0; http://www.mozilla.org/MPL/2.0/
 // @license     CC Attribution-ShareAlike 4.0 International; http://creativecommons.org/licenses/by-sa/4.0/
@@ -19,7 +19,7 @@
 // ==/UserScript==
 let config = {
   'debug': false,
-  'version': GM_getValue('version') || '2.9.1'
+  'version': GM_getValue('version') || '2.9.7'
 };
 let debug = config.debug ? console.log.bind(console) : function () {
 };
@@ -46,7 +46,8 @@ let init = function () {
     debug(hostname);
     window.addEventListener('message', function (e) {
       debug(e.data);
-      if (e.data.includes(hostname)) {
+      //if (e.data.includes(hostname)) {
+      if (e.data != null) {
         let div = document.querySelector("div.videoWrap");
         let title = div.querySelector("h2").innerText;
         debug(title);
@@ -56,22 +57,26 @@ let init = function () {
     });
   }
   else {
+    debug("iframe");
     let url = null;
     let p1 = document.querySelector('#p1');
     if (p1 != null) {
       let script = p1.querySelector("script");
-      url = script.innerText.match(/url:\s"([\/\.\d\w]*)"/)[1];
-      let hostname = getLocation(window.location.href).hostname;
-      url = "https://" + hostname + url;
+      url = script.innerText.match(/url:\s"([^"\s]+)"/)[1];
+      //let hostname = getLocation(window.location.href).hostname;
+      //url = "https://" + hostname + url;
     }
     else {
       let mediaplayer1 = document.querySelector("#mediaplayer1");
       let script = mediaplayer1.nextElementSibling;
       url = script.innerText.match(/url:\s"([:\/\.\d\w]*)"/)[1];
     }
-    debug(url);
-    setInterval(()=>{parent.postMessage(url, "*");},4000);
-    
+    if (url != null) {
+      debug(url);
+      setInterval(() => { parent.postMessage(url, "*"); }, 4000);
+
+    }
+
   }
 }
 window.addEventListener('DOMContentLoaded', init);
